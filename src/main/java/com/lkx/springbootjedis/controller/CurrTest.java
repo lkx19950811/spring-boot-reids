@@ -59,17 +59,23 @@ public class CurrTest {
 //            return null;
 //        });
     }
+
+    /**
+     *
+     * @param num 余额
+     * @return
+     */
     @GetMapping("takeTicket")
     public String takeTicket(Integer num){
         Long ticket;
-        try {
+        try {//自增 返回自增后的键值
             ticket =  redisTemplate.opsForValue().increment("ticket",1);
             System.out.println(System.currentTimeMillis());
         }catch (Exception e){
             System.out.println(e.getMessage());
             return e.getMessage();
         }
-      if (ticket<num){
+      if (ticket<=num){
           Order order = new Order();
           order.setOrderNum(String.valueOf(UUID.randomUUID()));
           order.setOderName(ticket.toString());
