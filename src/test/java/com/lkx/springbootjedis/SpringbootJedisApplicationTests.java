@@ -1,5 +1,6 @@
 package com.lkx.springbootjedis;
 
+import com.lkx.springbootjedis.pojo.HashPojo;
 import com.lkx.springbootjedis.pojo.Order;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +11,9 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.StringUtils;
+
+import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

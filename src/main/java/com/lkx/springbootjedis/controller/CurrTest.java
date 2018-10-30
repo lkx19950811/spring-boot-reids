@@ -9,6 +9,8 @@ import io.lettuce.core.api.StatefulConnection;
 import io.lettuce.core.api.StatefulRedisConnection;
 import io.lettuce.core.api.async.RedisAsyncCommands;
 import io.lettuce.core.api.sync.RedisCommands;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
@@ -31,6 +33,8 @@ import java.util.concurrent.TimeUnit;
  */
 @RestController
 public class CurrTest {
+    private static int count = 0;
+    private Logger logger = LoggerFactory.getLogger(CurrTest.class);
     @Autowired
     RedisTemplate redisTemplate;
     @Autowired
@@ -70,9 +74,8 @@ public class CurrTest {
         Long ticket;
         try {//自增 返回自增后的键值
             ticket =  redisTemplate.opsForValue().increment("ticket",1);
-            System.out.println(System.currentTimeMillis());
         }catch (Exception e){
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
             return e.getMessage();
         }
       if (ticket<=num){
@@ -80,8 +83,13 @@ public class CurrTest {
           order.setOrderNum(String.valueOf(UUID.randomUUID()));
           order.setOderName(ticket.toString());
           orderRepository.save(order);
+//          synchronized (this){
+              count++;
+              logger.info("抢到了 位数:{}---->毫秒数{}!",count,System.currentTimeMillis());
+//          }
             return "成功抢到";
       }else {
+            logger.error("秒杀结束"+System.currentTimeMillis());
             return "秒杀结束";
       }
     }
