@@ -26,4 +26,4 @@
 .mvn/
 mvnw
 mvnw.cmd
-src/main/java/com/lkx/springbootjedis/service/
+src/main/java/com/lkx/springbootRedis/service/

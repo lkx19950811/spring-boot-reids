@@ -1,4 +1,4 @@
-package com.lkx.springbootjedis.pojo;
+package com.lkx.springbootRedis.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

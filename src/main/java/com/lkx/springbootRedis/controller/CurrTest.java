@@ -1,29 +1,15 @@
-package com.lkx.springbootjedis.controller;
+package com.lkx.springbootRedis.controller;
 
-import com.lkx.springbootjedis.dao.OrderRepository;
-import com.lkx.springbootjedis.pojo.Order;
-import io.lettuce.core.RedisAsyncCommandsImpl;
-import io.lettuce.core.RedisFuture;
-import io.lettuce.core.SetArgs;
-import io.lettuce.core.api.StatefulConnection;
-import io.lettuce.core.api.StatefulRedisConnection;
-import io.lettuce.core.api.async.RedisAsyncCommands;
-import io.lettuce.core.api.sync.RedisCommands;
+import com.lkx.springbootRedis.dao.OrderRepository;
+import com.lkx.springbootRedis.pojo.Order;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.data.redis.connection.RedisConnection;
-import org.springframework.data.redis.connection.RedisStringCommands;
-import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.types.Expiration;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import redis.clients.jedis.JedisCommands;
 
 import java.util.UUID;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -33,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  */
 @RestController
 public class CurrTest {
-    private static int count = 0;
+    private volatile static int count = 0;
     private Logger logger = LoggerFactory.getLogger(CurrTest.class);
     @Autowired
     RedisTemplate redisTemplate;
@@ -83,10 +69,10 @@ public class CurrTest {
           order.setOrderNum(String.valueOf(UUID.randomUUID()));
           order.setOderName(ticket.toString());
           orderRepository.save(order);
-//          synchronized (this){
+          synchronized (this){
               count++;
               logger.info("抢到了 位数:{}---->毫秒数{}!",count,System.currentTimeMillis());
-//          }
+          }
             return "成功抢到";
       }else {
             logger.error("秒杀结束"+System.currentTimeMillis());

@@ -1,4 +1,4 @@
-package com.lkx.springbootjedis.pojo;
+package com.lkx.springbootRedis.pojo;
 
 /**
  * @author lee Cather

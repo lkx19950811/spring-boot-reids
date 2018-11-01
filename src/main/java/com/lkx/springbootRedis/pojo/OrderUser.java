@@ -1,4 +1,4 @@
-package com.lkx.springbootjedis.pojo;
+package com.lkx.springbootRedis.pojo;
 
 import javax.persistence.*;
 import java.util.Set;

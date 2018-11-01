@@ -1,6 +1,6 @@
-package com.lkx.springbootjedis;
+package com.lkx.springbootRedis;
 
-import com.lkx.springbootjedis.pojo.HashPojo;
+import com.lkx.springbootRedis.pojo.HashPojo;
 import org.junit.Test;
 
 import java.util.HashMap;

@@ -1,7 +1,7 @@
-package com.lkx.springbootjedis.controller;
+package com.lkx.springbootRedis.controller;
 
-import com.lkx.springbootjedis.dao.OrderRepository;
-import com.lkx.springbootjedis.dao.OrderUserRepository;
+import com.lkx.springbootRedis.dao.OrderRepository;
+import com.lkx.springbootRedis.dao.OrderUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
