@@ -19,7 +19,7 @@ public class OrderTestController {
     OrderUserRepository orderUserRepository;
     @GetMapping("orderUserTest")
     public Object orderUserTest(){
-        return orderUserRepository.findOne(1l);
+        return orderUserRepository.findById(1L);
     }
     @GetMapping("orderTest")
     public Object orderTest(){

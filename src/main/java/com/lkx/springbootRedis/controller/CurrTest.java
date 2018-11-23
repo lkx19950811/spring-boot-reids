@@ -1,7 +1,7 @@
-package com.lkx.springbootjedis.controller;
+package com.lkx.springbootRedis.controller;
 
-import com.lkx.springbootjedis.dao.OrderRepository;
-import com.lkx.springbootjedis.pojo.Order;
+import com.lkx.springbootRedis.dao.OrderRepository;
+import com.lkx.springbootRedis.pojo.Order;
 import io.lettuce.core.RedisAsyncCommandsImpl;
 import io.lettuce.core.RedisFuture;
 import io.lettuce.core.SetArgs;
