@@ -1,19 +1,16 @@
-package com.lkx.springbootjedis;
+package com.lkx.springbootRedis;
 
-import com.lkx.springbootjedis.pojo.HashPojo;
-import com.lkx.springbootjedis.pojo.Order;
+import com.alibaba.fastjson.JSONObject;
+import com.lkx.springbootRedis.pojo.Order;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.redis.connection.RedisConnection;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
+
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.StringUtils;
 
-import java.util.HashMap;
-import java.util.concurrent.ConcurrentHashMap;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -26,7 +23,9 @@ public class SpringbootJedisApplicationTests {
         order.setOderName("test");
         order.setOrderNum("45789654");
         redisTemplate.opsForValue().setIfAbsent(order.getOrderNum(),order);
-        System.out.println(redisTemplate.opsForValue().get(order.getOrderNum()));
+        JSONObject read = (JSONObject) redisTemplate.opsForValue().get(order.getOrderNum());
+        Order order1 = read.toJavaObject(Order.class);
+        System.out.println(order1);
     }
     @Test
     public void testRedisCurrLock(){

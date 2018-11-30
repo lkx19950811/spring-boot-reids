@@ -39,14 +39,15 @@ public class CurrTest {
     RedisTemplate redisTemplate;
     @Autowired
     OrderRepository orderRepository;
+
     @GetMapping("testCurr")
     public String testCurr(String num) {
-        Boolean c = redisTemplate.opsForValue().setIfAbsent(num,"123");
-        if (c!=null && c){
-            redisTemplate.expire(num,30,TimeUnit.SECONDS);
+        Boolean c = redisTemplate.opsForValue().setIfAbsent(num, "123");
+        if (c != null && c) {
+            redisTemplate.expire(num, 30, TimeUnit.SECONDS);
             System.out.println("锁住了");
             return "锁住了";
-        }else {
+        } else {
             System.out.println("没获得锁");
             return "没获得锁";
         }
@@ -65,32 +66,31 @@ public class CurrTest {
     }
 
     /**
-     *
      * @param num 余额
      * @return
      */
     @GetMapping("takeTicket")
-    public String takeTicket(Integer num){
+    public String takeTicket(Integer num) {
         Long ticket;
         try {//自增 返回自增后的键值
-            ticket =  redisTemplate.opsForValue().increment("ticket",1);
-        }catch (Exception e){
+            ticket = redisTemplate.opsForValue().increment("ticket", 1);
+        } catch (Exception e) {
             logger.error(e.getMessage());
             return e.getMessage();
         }
-      if (ticket<=num){
-          Order order = new Order();
-          order.setOrderNum(String.valueOf(UUID.randomUUID()));
-          order.setOderName(ticket.toString());
-          orderRepository.save(order);
+        if (ticket <= num) {
+            Order order = new Order();
+            order.setOrderNum(String.valueOf(UUID.randomUUID()));
+            order.setOderName(ticket.toString());
+            orderRepository.save(order);
 //          synchronized (this){
-              count++;
-              logger.info("抢到了 位数:{}---->毫秒数{}!",count,System.currentTimeMillis());
+            count++;
+            logger.info("抢到了 位数:{}---->毫秒数{}!", count, System.currentTimeMillis());
 //          }
             return "成功抢到";
-      }else {
-            logger.error("秒杀结束"+System.currentTimeMillis());
+        } else {
+            logger.error("秒杀结束" + System.currentTimeMillis());
             return "秒杀结束";
-      }
+        }
     }
 }
