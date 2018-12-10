@@ -2,7 +2,6 @@ package com.lkx.springbootRedis;
 
 import com.lkx.springbootRedis.pojo.HashPojo;
 import org.junit.Test;
-
 import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -25,5 +24,10 @@ public class OnlyTest {
         hashMap.put(o2,o2);
         Object object= hashMap.get(o1);
         System.out.println(object);
+    }
+    @Test
+    public void testStr(){
+        String[] strs = {"a","b","c"};
+
     }
 }
